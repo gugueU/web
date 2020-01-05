@@ -110,13 +110,22 @@ TorrentRendererFull.prototype =
 {
 	createRow: function()
 	{
-		var root, name, peers, progressbar, details, image, button;
+		var root, name, uploadLimit, peers, progressbar, details, image, button;
 
 		root = document.createElement('li');
 		root.className = 'torrent';
 
 		name = document.createElement('div');
 		name.className = 'torrent_name';
+
+		warning = document.createElement('div');
+		warning.className = 'torrent_warning';
+
+                uploadLimit = document.createElement('span');
+                uploadLimit.className = 'torrent_uploadLimit';
+
+                noTracker = document.createElement('span');
+                noTracker.className = 'torrent_noTracker';
 
 		peers = document.createElement('div');
 		peers.className = 'torrent_peer_details';
@@ -131,14 +140,19 @@ TorrentRendererFull.prototype =
 		button.appendChild(image);
 
 		root.appendChild(name);
+
 		root.appendChild(peers);
 		root.appendChild(button);
 		root.appendChild(progressbar.element);
 		root.appendChild(details);
+                warning.appendChild(uploadLimit);
+		warning.appendChild(noTracker);
+		root.appendChild(warning);
 
 		root._name_container = name;
 		root._peer_details_container = peers;
 		root._progress_details_container = details;
+                root._warning_container = warning;
 		root._progressbar = progressbar;
 		root._pause_resume_button_image = image;
 		root._toggle_running_button = button;
@@ -265,6 +279,18 @@ TorrentRendererFull.prototype =
 		// name
 		setTextContent(root._name_container, t.getName());
 
+		// uploadLimit
+		var warning = ''
+		if (t.getUploadLimited()){
+			warning += 'upload limited to ' + t.getUploadLimit() + 'kbps    ';
+                }
+                if (!t.getTrackers().length){
+                        warning += 'no tracker';
+                }
+                setTextContent(root._warning_container, warning);
+                setTextContent(root._warning_container.noTracker, 'toto');
+                setTextContent(root._warning_container.uploadLimit, 'tata');
+
 		// progressbar
 		TorrentRendererHelper.renderProgressbar(controller, t, root._progressbar);
 
@@ -349,10 +375,12 @@ TorrentRendererCompact.prototype =
 	render: function(controller, t, root)
 	{
 		// name
+                console.log(t.getName() + " - " + t.getUploadLimit() + " -  " + t.getUploadLimited());
 		var is_stopped = t.isStopped();
 		var e = root._name_container;
 		$(e).toggleClass('paused', is_stopped);
-		setTextContent(e, t.getName());
+
+		setTextContent(e, t.getName() + '   -- ↑  ' + t.getUploadLimit());
 
 		// peer details
 		var has_error = t.getError() !== Torrent._ErrNone;

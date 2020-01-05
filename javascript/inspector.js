@@ -398,6 +398,47 @@ function Inspector(controller) {
             str = none;  
         setTextContent(e.comment_lb, str);
 
+
+        //
+        //  upload limit
+        //
+
+        if(torrents.length < 1)
+            str = none;
+        else {
+            str = torrents[0].getUploadLimit();
+            for(i=0; t=torrents[i]; ++i) {
+                if(str != t.getUploadLimit()) {
+                    str = mixed;
+                    break;
+                }
+            }
+        }
+        if(!str)
+            str = none;
+        setTextContent(e.upload_limit_lb, str);
+
+
+       //
+        //  upload limited
+        //
+
+        if(torrents.length < 1)
+            str = none;
+        else {
+            str = torrents[0].getUploadLimited();
+            for(i=0; t=torrents[i]; ++i) {
+                if(str != t.getUploadLimited()) {
+                    str = mixed;
+                    break;
+                }
+            }
+        }
+        if(!str)
+            str = none;
+        setTextContent(e.upload_limited_lb, str);
+
+
         //
         //  origin
         //
@@ -781,6 +822,8 @@ function Inspector(controller) {
         data.elements.privacy_lb        = $('#inspector-info-privacy')[0];
         data.elements.origin_lb         = $('#inspector-info-origin')[0];
         data.elements.comment_lb        = $('#inspector-info-comment')[0];
+        data.elements.upload_limit_lb   = $('#inspector-info-upload-limit')[0];
+        data.elements.upload_limited_lb   = $('#inspector-info-upload-limited')[0];
         data.elements.name_lb           = $('#torrent_inspector_name')[0];
 
         // force initial 'N/A' updates on all the pages

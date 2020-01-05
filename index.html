@@ -46,8 +46,13 @@
 			<div id="toolbar-separator"></div>
 			<div id="toolbar-start-all" title="Start All Torrents"></div>
 			<div id="toolbar-pause-all" title="Pause All Torrents"></div>
-			<div id="context_add_tracker" style="background: transparent url('images/logo.png') no-repeat scroll left top;" title="ADD TRACKER"></div>	
-			
+			<div id="toolbar-separator"></div>
+			<div id="context_add_tracker" title="Add trackers"></div>
+			<div id="toolbar_remove_tracker" title="remove trackers"></div>
+			<div id="toolbar-separator"></div>
+			<div id="toolbar_upload_limit" title="Upload limit"></div>
+			<div id="toolbar_upload_unlimited" title="Upload unlimited"></div>
+
 			<div id="toolbar-inspector" title="Toggle Inspector"></div>
 		</div>
 
@@ -220,6 +225,7 @@
 					<div class="row"><div class="key">Privacy:</div><div class="value" id="inspector-info-privacy">&nbsp;</div></div>
 					<div class="row"><div class="key">Origin:</div><div class="value" id="inspector-info-origin">&nbsp;</div></div>
 					<div class="row"><div class="key">Comment:</div><div class="value" id="inspector-info-comment">&nbsp;</div></div>
+					<div class="row"><div class="key">uploadLimit:</div><div class="value" id="inspector-info-upload-limit">&nbsp;</div></div>
 				</div>
 			</div><!-- id="inspector_tab_info_container" -->
 
@@ -328,7 +334,7 @@
 					enctype="multipart/form-data" target="tracker_add_form">
 					<div class="dialog_message" style="width:80%;">
 						<label for="trackers">TRACKERS(seperate with a newline):</label>
-						<textarea id="trackers" rows="10" cols="65"></textarea>
+						<textarea id="trackers" rows="10" cols="65">http://ygg.peer2peer.cc:8080/DnnISwk4JxKYnBpvx3shJrBIonm67DEO/announce</textarea>
 					</div>
 					<a href="#add" id="add_confirm_button">ADD</a>
 					<a href="#cancel" id="add_cancel_button">CANCEL</a>
@@ -430,6 +436,10 @@
 				<li class="separator"></li>
 				
 				<li id="context_reannounce">ASK TRACKER FOR MORE PEERS</li>
+				<li id="context_RemoveTracker">remove tracker</li>
+				<li id="context_EnabledUpload">enabled upload</li>
+				<li id="context_StopUpload">stop upload</li>
+
 				<li class="separator"></li>
 				<li id="context_select_all">Select All</li>
 				<li id="context_deselect_all">Deselect All</li>

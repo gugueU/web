@@ -183,6 +183,47 @@ TransmissionRemote.prototype =
 		this.sendRequest(o,callback,context);
 	},
 
+	removeTracker: function(torrent_ids,trackers,callback,context)
+	{
+		var args={};
+		args['ids']=torrent_ids;
+		args['trackerRemove']=[0];
+		var o=
+			{
+				method:'torrent-set',
+				arguments: args
+			};
+		this.sendRequest(o,callback,context);
+	},
+
+	enabledUpload: function(torrent_ids,trackers,callback,context)
+	{
+		var args={};
+		args['ids']=torrent_ids;
+                args['uploadLimit']=null;
+		args['uploadLimited']=false;
+		var o=
+			{
+				method:'torrent-set',
+				arguments: args
+			};
+		this.sendRequest(o,callback,context);
+	},
+
+	stopUpload: function(torrent_ids,trackers,callback,context)
+	{
+		var args={};
+		args['ids']=torrent_ids;
+		args['uploadLimit']=1;
+                args['uploadLimited']=true;
+		var o=
+			{
+				method:'torrent-set',
+				arguments: args
+			};
+		this.sendRequest(o,callback,context);
+	},
+
 	moveTorrents: function(torrent_ids, new_location, callback, context) {
 		var remote = this;
 		this.sendTorrentSetRequests( 'torrent-set-location', torrent_ids, 

@@ -48,6 +48,10 @@ Transmission.prototype =
 		$('#toolbar-remove').click($.proxy(this.removeClicked,this));
 		$('#toolbar-open').click($.proxy(this.openTorrentClicked,this));
 
+		$('#toolbar_remove_tracker').click($.proxy(this.removeTrackerSelectedTorrents,this));
+		$('#toolbar_upload_limit').click($.proxy(this.stopUploadSelectedTorrents,this));
+		$('#toolbar_upload_unlimited').click($.proxy(this.enabledUploadSelectedTorrents,this));
+
 		$('#prefs-button').click($.proxy(this.togglePrefsDialogClicked,this));
 
 		$('#upload_confirm_button').click($.proxy(this.confirmUploadClicked,this));
@@ -190,7 +194,9 @@ Transmission.prototype =
 			context_verify:               function() { tr.verifySelectedTorrents(); },
 			context_reannounce:           function() { tr.reannounceSelectedTorrents(); },
 
-			
+			context_RemoveTracker:        function() { tr.removeTrackerSelectedTorrents(); },
+			context_EnabledUpload:        function() { tr.enabledUploadSelectedTorrents(); },
+			context_StopUpload:           function() { tr.stopUploadSelectedTorrents(); },
 
 			context_move_top:             function() { tr.moveTop(); },
 			context_move_up:              function() { tr.moveUp(); },
@@ -1107,6 +1113,18 @@ Transmission.prototype =
 		this.reannounceTorrents(this.getSelectedTorrents());
 	},
 
+	removeTrackerSelectedTorrents: function() {
+		this.removeTrackerTorrents(this.getSelectedTorrents());
+	},
+
+	enabledUploadSelectedTorrents: function() {
+		this.enabledUploadTorrents(this.getSelectedTorrents());
+	},
+
+	stopUploadSelectedTorrents: function() {
+		this.stopUploadTorrents(this.getSelectedTorrents());
+	},
+
 	startAllTorrents: function(force) {
 		this.startTorrents(this.getAllTorrents(), force);
 	},
@@ -1135,6 +1153,27 @@ Transmission.prototype =
 	reannounceTorrents: function(torrents) {
 		this.remote.reannounceTorrents(this.getTorrentIds(torrents),
 		                               this.refreshTorrents, this);
+	},
+
+
+	removeTrackerTorrent: function(torrent) {
+		this.removeTrackerTorrents([ torrent ]);
+	},
+	removeTrackerTorrents: function(torrents) {
+		this.remote.removeTracker(this.getTorrentIds(torrents),
+			this.refreshTorrents, this);
+	},
+
+	enabledUploadTorrents: function(torrents) {
+		console.log('toto');
+
+		this.remote.enabledUpload(this.getTorrentIds(torrents),
+			this.refreshTorrents, this);
+	},
+
+	stopUploadTorrents: function(torrents) {
+		this.remote.stopUpload(this.getTorrentIds(torrents),
+			this.refreshTorrents, this);
 	},
 
 	stopAllTorrents: function() {

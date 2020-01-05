@@ -79,7 +79,9 @@ Torrent.Fields.Stats = [
 	'downloadDir',
 	'uploadedEver',
 	'uploadRatio',
-	'webseedsSendingToUs'
+	'webseedsSendingToUs',
+	'uploadLimit',
+	'uploadLimited',
 ];
 
 // fields used by the inspector which only need to be loaded once
@@ -252,6 +254,8 @@ Torrent.prototype =
 	getUploadedEver: function() { return this.fields.uploadedEver; },
 	getWebseedsSendingToUs: function() { return this.fields.webseedsSendingToUs; },
 	isFinished: function() { return this.fields.isFinished; },
+	getUploadLimit: function() { return this.fields.uploadLimit; },
+	getUploadLimited: function() { return this.fields.uploadLimited; },
 
 	// derived accessors
 	hasExtraInfo: function() { return 'hashString' in this.fields; },
